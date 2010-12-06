@@ -5,8 +5,6 @@ package commandserver;
 
 import java.io.*;
 
-import com.sun.org.apache.xpath.internal.operations.Variable;
-
 /**
  * @author W. Taff and P. Salevski
  * Handles input from MM-node.  
