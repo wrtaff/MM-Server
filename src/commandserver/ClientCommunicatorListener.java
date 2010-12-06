@@ -79,7 +79,7 @@ public class ClientCommunicatorListener implements Runnable{
 			
 			
 			if ( textReceived.compareTo("quit")==0 ){
-				System.out.println("quitting...");
+				System.out.println("quitting....");
 				callingCC.terminateSession();
 				carryOn = false;
 			}
