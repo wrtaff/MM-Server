@@ -25,7 +25,7 @@ public class CandCserverGUI implements Runnable {
 	/* (non-Javadoc)
 	 * @see java.lang.Runnable#run()
 	 */
-	@Override
+	//@Override
 	public void run() {
 		
 		Scanner adminInputScanner = new Scanner(System.in);

@@ -60,7 +60,7 @@ public class ClientCommunicator implements Runnable{
 		/* (non-Javadoc)
 		 * @see java.lang.Runnable#run()
 		 */
-		@Override
+		//@Override
 		public void run() {
 			
 			ccListenerStarter() ;
