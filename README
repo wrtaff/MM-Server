@@ -2,3 +2,7 @@ Journal for the file, from pluto, 3:18
 back from titan, 3:55
 titan: stopped using bin in repository.  Each can create their own bin.
 pluto: test to see if using my new name. 
+pluto: It doesn't really use the name, just wrtaff.  At this point,
+way ahead is to add comments, and to make functions that 
+execute by a call e.g. ALICE:RUN_HELLO or ALICE:HALT_EXECUTION or
+ALICE:CHECK_INBOX
