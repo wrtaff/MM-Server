@@ -53,7 +53,7 @@ public class ClientCommunicatorListener implements Runnable{
 	}
 	
 	
-	@Override
+	//@Override
 	public void run() {
 		 
 		Boolean carryOn = true;
