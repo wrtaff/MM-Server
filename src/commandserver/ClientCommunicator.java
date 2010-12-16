@@ -21,11 +21,19 @@ import java.io.PrintStream;
  */
 public class ClientCommunicator implements Runnable{
 	
+	
+	/** Socket passed to CC by the SocketServer  */
 	private Socket ccSocket;
 	
+	/** The output stream we use to push our messages onto the wire  */
 	private PrintStream outPrintStream;
 	
+	
+	/** the location of the db, so we can call it's methods */
 	private ClientDatabase db;
+	
+	/** the keyname of the host that the CC relates to */
+	private String keyname; 
 	
 	
 	// CONSTRUCTOR
@@ -41,19 +49,19 @@ public class ClientCommunicator implements Runnable{
 			
 			this.outPrintStream = new PrintStream( 
 					ccSocket.getOutputStream() );
-			
-			
+						
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 		
-	}//end ClientCommunicator()
+	}//end constructor ClientCommunicator()
 
 
 	
-	
+	//TODO how deal with orphaned threads when lost cxn?  		
+
 	
 		
 		
@@ -127,24 +135,7 @@ public class ClientCommunicator implements Runnable{
 		}//end terminateSession()
 
 		
-		
-		
-		
-		
-		
-		
-		
-		/**
-		 * @param clientName
-		 */
-		public void createRecordForClient(String clientName){
-			
-			db.createRecord(clientName, this);
-			
-		}
-		
-		
-		
+
 		
 		/**
 		 * @param msg
@@ -153,6 +144,24 @@ public class ClientCommunicator implements Runnable{
 			
 			outPrintStream.println(msg);
 			
+		}
+
+
+
+		/**
+		 * @return the keyname
+		 */
+		public String getKeyname() {
+			return keyname;
+		}
+
+
+
+		/**
+		 * @param keyname the keyname to set
+		 */
+		public void setKeyname(String keyname) {
+			this.keyname = keyname;
 		}
 		
 

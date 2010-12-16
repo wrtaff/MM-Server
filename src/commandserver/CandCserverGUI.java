@@ -32,12 +32,17 @@ public class CandCserverGUI implements Runnable {
 		String inputString = adminInputScanner.next();
 		while (inputString.compareTo("QUIT")!=0){
 			
-			int delimValue = inputString.indexOf(":"); 
-			System.out.println(delimValue);
-			String key = inputString.substring(0, delimValue);
-			String value = inputString.substring(delimValue + 1);
-			
-			db.getRecord(key).getCC().sendMessage2Client(value);
+			if (inputString.compareTo("PRINT:ALL") == 0){
+				printAll();
+			}
+			else {
+				int delimValue = inputString.indexOf(":"); 
+				System.out.println(delimValue);
+				String key = inputString.substring(0, delimValue);
+				String value = inputString.substring(delimValue + 1);
+				
+				db.getRecord(key).getCC().sendMessage2Client(value);
+			}//end else
 			
 			inputString = adminInputScanner.next();
 			
@@ -46,6 +51,15 @@ public class CandCserverGUI implements Runnable {
 			
 		}//end while
 		
+	}
+
+	/**
+	 * Print all records in the database.  
+	 */
+	private void printAll() {
+		// TODO Auto-generated method stub
+		String printBuffer = db.getAllrecordsFromDB();
+		System.out.println(printBuffer);
 	}
 
 }

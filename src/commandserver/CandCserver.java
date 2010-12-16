@@ -21,9 +21,7 @@ public class CandCserver {
 		
 		//TODO CLEAN initialization stuff - have to make the database:
 		ClientDatabase testDBase = new ClientDatabase();
-		
-		
-		
+				
 		//TODO - start the UI - will strike this
 		Thread GUIthread = new Thread(
 				new CandCserverGUI(testDBase));

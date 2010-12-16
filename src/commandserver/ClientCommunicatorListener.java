@@ -16,14 +16,14 @@ public class ClientCommunicatorListener implements Runnable{
 	///////////////////////////////////////////
 	//DATA MEMBERS 
 	///////////////////////////////////////////
-
+//TODO document these!
 	private InputStream inStream;
 	
 	private BufferedReader inBufferedReader; 
 	
 	private ClientDatabase db;
 	
-	private ClientCommunicator callingCC;
+	private ClientCommunicator parentCC;
 
 	
 	
@@ -46,7 +46,7 @@ public class ClientCommunicatorListener implements Runnable{
 		this.inBufferedReader = 
 			new BufferedReader(new InputStreamReader(inStream));
 		
-		this.callingCC = callingCC;
+		this.parentCC = callingCC;
 				
 	}
 	
@@ -62,6 +62,7 @@ public class ClientCommunicatorListener implements Runnable{
 										"Listener up and listening");
 		db.printUpandListening();
 
+			//TODO - clean this code train wreck for readability - make fn's, including an assignment fn for '='? 
 		while ( carryOn ) {
 
 			try {
@@ -78,10 +79,21 @@ public class ClientCommunicatorListener implements Runnable{
 			
 			
 			
-			if ( textReceived.compareTo("quit")==0 ){
+			if ( textReceived.compareTo("QUIT")==0 ){
 				System.out.println("quitting....");
-				callingCC.terminateSession();
+				parentCC.terminateSession();
 				carryOn = false;
+			}
+			
+			else if ( textReceived.contains("GETINBOX")){
+			
+				
+				String inbox = db.getRecord(parentCC.getKeyname())
+					.getClientInbox();
+				
+				parentCC.sendMessage2Client(inbox);
+				
+				
 			}
 			
 			
@@ -98,15 +110,32 @@ public class ClientCommunicatorListener implements Runnable{
 				
 				if (key.compareTo("NAME")==0) {
 					
-					callingCC.createRecordForClient(value);
-					//RESET THE TEXT OR WE SPIN
-					textReceived = "";		
+					parentCC.setKeyname(value);
 					
+					db.createRecord(value, parentCC);
+									
 				}//end inner if
+				
+				else if (key.compareTo("STATUS")==0) {
+					
+					//with key, set the status
+					db.getRecord(parentCC.getKeyname()).setClientStatus(value);
+										
+				}// end status if
+				
+
+				
+				else if (key.compareTo("EXERCISE")==0){
+					
+					db.getRecord(parentCC.getKeyname()).setExercise(value);
+										
+				}//end exercise if
+
 				
 			}//end outer if
 			
-
+			//RESET THE TEXT OR WE SPIN
+			textReceived = "";
 						
 			
 			 try {

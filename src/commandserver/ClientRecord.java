@@ -91,10 +91,8 @@ public class ClientRecord {
 	 * the client.  Consists of a plain text string value.   
 	 * @return clientInbox - the contents of the client's inbox
 	 */
+	//TODO refactor getClientInbox to just get Inbox!
 	public String getClientInbox(){
-		
-		status = "Client done reading inbox, received message: " 
-			+ clientInbox;
 		
 		return clientInbox;
 		
@@ -159,10 +157,16 @@ public class ClientRecord {
 	
 	
 	/**
-	 * sets the client inbox to a text message written by server
-	 * @param message - set by server at inbox in record of client
-	 */
+	 * Allows server to write message to client inbox. 
+	 * Only servers shall write to the client inbox.  
+	 * Read by clients to ascertain their instructions from server.
+	 * @param hostID - uid_host of the host of interest
+	 * @param message - String of message FROM server TO client.  
+	 * @return True if inbox message written, False if record 
+	 *                    not found
+	 * */
 	public void setClientInbox(String message){
+		//TODO harden this method to match the docstring
 		clientInbox = message;
 	}
 	
@@ -170,11 +174,17 @@ public class ClientRecord {
 	
 	
 	/**
-	 * sets the client status
-	 * written by the client, read by the server
-	 * @param message
-	 */
+	 * Allows client to set their status in status box of record. 
+	 * Only clients shall write their status to their status box.  
+	 * Read by the server to ascertain status of the client.  
+	 * @param hostID - uid_host of the host of interest
+	 * @param status - String of status value of host.  
+	 * @return True of status written, False if record not found
+	 * 
+	 * */
 	public void setClientStatus(String message){
+		//TODO harden this method to match the docstring
+		
 		status = message;
 	}
 	
@@ -182,11 +192,15 @@ public class ClientRecord {
 	
 	
 	/**
-	 * sets the ExerciseNetwork 
-	 * set by the client, read by the server
-	 * @param message
-	 */
-	public void setExerciseNetwork(String message){
+	 * deletes a client record from the database.
+	 * Will attempt to remove a client record from the database, 
+	 * based on the host UID provided.   
+	 * @param hostID - uid_host of the host of interest
+	 * @return True of record and deleted, False if record not found
+	 * 
+	 * */
+	public void setExercise(String message){
+		//TODO harden this method to match the docstring
 		uid_ExerciseNetwork = message;
 	}
 } // end of ClientRecord class
