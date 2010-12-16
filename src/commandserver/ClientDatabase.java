@@ -19,7 +19,6 @@ import java.net.*;
  */
 public class ClientDatabase {
 	
-	//TODO TEST - DELETE ME
 	
 	///////////////////////////////////////////
 	//DATA MEMBERS 
