@@ -52,7 +52,7 @@ public class CandCserverGUI implements Runnable {
 		}//end while
 		
 		System.out.println("Got quit command");
-		
+		System.exit(0);
 	}
 
 	/**
