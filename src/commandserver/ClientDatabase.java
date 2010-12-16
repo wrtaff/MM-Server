@@ -204,14 +204,44 @@ public class ClientDatabase {
 		//by exercise
 		//halt without argument halts all!
 		
+		//iterate, and set all to halt, just like print.
+		
+		
+		
+		for (String keyString : dbase.keySet() ) {
+			
+			dbase.get(keyString).setClientInbox( "HALT" );
+			
+		}//end for-loop
+		
+		
 		
 	}//end halt_running_mods()
 	
-	public void run_module(){
+	
+	
+	
+	
+	
+	
+	public void run_module(int moduleNumber){
 		//TODO build and comment this method
 		//overload this to allow for run by host, all, or 
 		//by exercise
 		//halt without argument halts all!
+		
+		for (String keyString : dbase.keySet() ) {
+			
+			//set the inbox
+			dbase.get(keyString).
+				setClientInbox("MOD_" + moduleNumber);
+			
+			//alert the client
+			dbase.get(keyString).getCC().sendMessage2Client(
+					"CHECK_INBOX");
+			
+		}//end for-loop
+		
 		
 
 	}// end run_module()

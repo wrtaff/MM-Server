@@ -35,6 +35,23 @@ public class CandCserverGUI implements Runnable {
 			if (inputString.compareTo("PRINT:ALL") == 0){
 				printAll();
 			}
+			
+			else if (inputString.compareTo("HALT") == 0){
+				
+				System.out.println("Halting All!");
+				
+				db.halt__module();
+				
+			}
+			
+			else if (inputString.compareTo("MOD_0") == 0){
+				
+				System.out.println("Running MOD_0");
+				
+				db.run_module(0);
+				
+			}
+			
 			else {
 				int delimValue = inputString.indexOf(":"); 
 				System.out.println(delimValue);
