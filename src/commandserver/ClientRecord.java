@@ -91,7 +91,6 @@ public class ClientRecord {
 	 * the client.  Consists of a plain text string value.   
 	 * @return clientInbox - the contents of the client's inbox
 	 */
-	//TODO refactor getClientInbox to just get Inbox!
 	public String getClientInbox(){
 		
 		return clientInbox;

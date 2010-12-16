@@ -188,9 +188,6 @@ public class ClientDatabase {
 	/////////////////////////////
 	
 	
-	
-	//TODO START HERE: MOVE THESE REDUNDANT FUNCTIONS TO ClientRecord- SHOULD BE CALLED BY GETTER
-
 	//TODO DELETE THIS SCAFF
 	public void printUpandListening(){
 		
