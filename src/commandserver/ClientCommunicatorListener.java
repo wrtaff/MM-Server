@@ -54,7 +54,7 @@ public class ClientCommunicatorListener implements Runnable{
 	//@Override
 	public void run() {
 		 
-		Boolean carryOn = true;
+		Boolean keepGoing = true;
 		
 		String textReceived = "";
 		
@@ -63,7 +63,7 @@ public class ClientCommunicatorListener implements Runnable{
 		db.printUpandListening();
 
 			//TODO - clean this code train wreck for readability - make fn's, including an assignment fn for '='? 
-		while ( carryOn ) {
+		while ( keepGoing ) {
 
 			try {
 
@@ -82,7 +82,7 @@ public class ClientCommunicatorListener implements Runnable{
 			if ( textReceived.compareTo("QUIT")==0 ){
 				System.out.println("quitting....");
 				parentCC.terminateSession();
-				carryOn = false;
+				keepGoing = false;
 			}
 			
 			else if ( textReceived.contains("GETINBOX")){
