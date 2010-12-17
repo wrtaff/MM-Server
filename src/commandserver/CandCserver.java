@@ -24,7 +24,7 @@ public class CandCserver {
 				
 		//TODO - start the UI - will strike this
 		Thread GUIthread = new Thread(
-				new CandCserverGUI(testDBase));
+				new CandCserverMenuUI(testDBase));
 		GUIthread.start();
 		
 

@@ -195,7 +195,7 @@ public class ClientDatabase {
 		
 	}
 	
-	public void halt__module(){
+	public void halt_module(){
 		//TODO build and comment this method
 		//overload this to allow for halt by host, all, or 
 		//by exercise
@@ -234,8 +234,8 @@ public class ClientDatabase {
 				setClientInbox("MOD_" + moduleNumber);
 			
 			//alert the client
-			dbase.get(keyString).getCC().sendMessage2Client(
-					"CHECK_INBOX");
+			//dbase.get(keyString).getCC().sendMessage2Client(
+			//		"CHECK_INBOX");
 			
 		}//end for-loop
 		

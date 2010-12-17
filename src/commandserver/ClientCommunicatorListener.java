@@ -16,7 +16,7 @@ public class ClientCommunicatorListener implements Runnable{
 	///////////////////////////////////////////
 	//DATA MEMBERS 
 	///////////////////////////////////////////
-//TODO document these!
+//TODO ENTIRE CLASS NEEDS DOCUMENTATION
 	private InputStream inStream;
 	
 	private BufferedReader inBufferedReader; 
