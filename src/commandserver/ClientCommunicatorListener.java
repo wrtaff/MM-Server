@@ -17,15 +17,19 @@ public class ClientCommunicatorListener implements Runnable{
 	//DATA MEMBERS 
 	///////////////////////////////////////////
 //TODO ENTIRE CLASS NEEDS DOCUMENTATION
+	
+	
+	/** passed - will bolt on top a BufferedReader */
 	private InputStream inStream;
 	
+	/** use for reading incoming messages from MM-Client */
 	private BufferedReader inBufferedReader; 
-	
+		
+	/** gives ability to call ClientDatabase fns 	 */
 	private ClientDatabase db;
 	
+	/** gives ability to call back to the calling CC */
 	private ClientCommunicator parentCC;
-
-	
 	
 	
 	
