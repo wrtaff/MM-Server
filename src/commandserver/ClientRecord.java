@@ -15,10 +15,7 @@ public class ClientRecord {
 	//DATA MEMBERS 
 	///////////////////////////////////////////
 	
-	
-	/**unique identifier of host, based on mac and hostname */
-	private String uid_Host;
-	
+
 	
 	/**unique identifier of the exercise network */
 	private String uid_ExerciseNetwork;
@@ -54,17 +51,13 @@ public class ClientRecord {
 	 * @param passedCC - the ClientCoummincator for the client.
 	 * @param db - the database of clients
 	 */
-	public ClientRecord (String hostID, 
-						String exerciseID, 
-						ClientCommunicator passedCC, 
-						ClientDatabase db) {
+	public ClientRecord (ClientCommunicator passedCC,
+											ClientDatabase db) {
 		
-		
-		this.uid_Host = hostID;
-		
-		this.uid_ExerciseNetwork = exerciseID;
 		
 		this.cc = passedCC;
+		
+		this.uid_ExerciseNetwork = "NOT_SET";
 		
 		this.status = "INITIALIZED";
 		
@@ -116,16 +109,7 @@ public class ClientRecord {
 	}
 
 	
-	
-	
-	/**
-	 * get the UID of the host.  Useful for printing reports.  
-	 * @return uid_Host
-	 */
-	public String getUID_Host(){
-		//TODO - make uid_Host only appear at ClientDatabase?  
-		return uid_Host;
-	}
+
 	
 	
 	

@@ -54,16 +54,14 @@ public class ClientDatabase {
 	public Boolean createRecord(String hostID, 
 										ClientCommunicator ccIn) {
 		
-		String exerciseID = "INIT";
 		
-		//build the record
-		ClientRecord tempRecord = 
-				new ClientRecord(hostID, exerciseID, ccIn, this); 
+
+		ClientRecord newRecord = new ClientRecord(ccIn, this); 
 		
-		//put the record in the db
+
 		try {
 			
-			 dbase.put(hostID, tempRecord);
+			 dbase.put(hostID, newRecord);
 			 
 			 System.out.println("Added record for " + hostID);
 			 
@@ -80,35 +78,14 @@ public class ClientDatabase {
 		}		
 
 		return true;
+		
 	}
 	
 	
 	
 	
 	
-	/**
-	 * Print record in the database to the console.
-	 * Prints instance of record to the console, including the
-	 * contents of inbox, status, the client UID and the exercise network.
-	 * @param hostID - uid_host of the host of interest
-	 * */
-	public void printRecords(String hostID) {
-		ClientRecord tempClientRecord = null;
-		
-		// gets the record from the TreeMap that has the hostID key
-		tempClientRecord = getRecord(hostID);
-		
-		System.out.println("Printing all information for Record: " +
-				hostID);
-		System.out.println("Client Inbox " + 
-				tempClientRecord.getClientInbox() );
-		System.out.println("Client Status " + 
-				tempClientRecord.getClientStatus() );
-		System.out.println("Client uid_Host " + 
-				tempClientRecord.getUID_Host() );
-		System.out.println("Client uid_ExerciseNetwork " + 
-				tempClientRecord.getUID_ExerciseNetwork() );
-	}
+
 	
 	
 	
