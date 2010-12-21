@@ -7,7 +7,10 @@ import java.net.*;
 
 /**
  * The server - top level for program, and listener for connections.
- * Sits and listens for connections, then passes them off to database.  
+ * Initializes the database.  Starts the UI.  
+ * Sits and listens for connections, spins off CC-Communicators
+ * to handle them and passes off Socket to same, then reset to 
+ * listen.   
  * 
  * @author W. Taff and P. Salevski
  *
@@ -36,13 +39,15 @@ public class CandCserver {
 				new CandCserverMenuUI(dataBase));
 		GUIthread.start();
 		
-
-		System.out.println ("Server Listening on port " + listenPort);
 		
 		
 		try {
 			
 			ServerSocket server = new ServerSocket (listenPort);
+		
+			System.out.println ("Server Listening on port "
+														+ listenPort);
+			
 			
 			while (true){
 			
@@ -58,12 +63,6 @@ public class CandCserver {
 				
 				thread.start();
 				
-				//System.out.println("Created and started Thread: " + 
-				//		thread.getName() );
-				
-				//shouldn't need to ever close the socket...
-				//server.close();
-			
 			
 			}//end while
 			
