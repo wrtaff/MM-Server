@@ -57,7 +57,7 @@ public class CandCserverMenuUI implements Runnable {
 		
 		String inputString = "";
 		
-		int cmdDelimValue = 0;
+		int cmdDelimValue;
 		
 		String command = null;
 		
@@ -70,6 +70,8 @@ public class CandCserverMenuUI implements Runnable {
 			inputString = adminInputScanner.next();
 			
 			inputString = inputString.toUpperCase();
+			
+			cmdDelimValue = inputString.length();
 
 			
 			try {
@@ -98,6 +100,7 @@ public class CandCserverMenuUI implements Runnable {
 					
 					int modDelimValue = inputString.indexOf("_") + 1; 
 					
+							
 					moduleNumber = Integer.parseInt(inputString.
 							substring(modDelimValue, cmdDelimValue) );
 					

@@ -48,11 +48,13 @@ public class ClientCommunicator implements Runnable{
 		try {
 			
 			this.outPrintStream = new PrintStream( 
+					
 					ccSocket.getOutputStream() );
 						
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
+			
 		}
 		
 		
@@ -104,8 +106,8 @@ public class ClientCommunicator implements Runnable{
 				
 			} catch (IOException e) {
 			
-				// TODO Auto-generated catch block
 				e.printStackTrace();
+				
 			}
 			
 			
@@ -124,11 +126,17 @@ public class ClientCommunicator implements Runnable{
 			
 			sendMessage2Client("Session Terminated");
 			
+			db.getRecord(keyname).setClientStatus("TERMINATED");
+			
 			try {
+				
 				ccSocket.close();
+				
+				
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+
 				e.printStackTrace();
+				
 			}
 			
 			
@@ -137,7 +145,7 @@ public class ClientCommunicator implements Runnable{
 		
 
 		
-		/**
+		/**TODO COMMENT ME
 		 * @param msg
 		 */
 		public void sendMessage2Client(String msg){

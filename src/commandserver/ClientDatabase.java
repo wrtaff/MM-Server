@@ -26,7 +26,9 @@ public class ClientDatabase {
 
 	
 	/**the database data structure of ClientRecord*/
-	private SortedMap<String, ClientRecord> dbase = Collections.synchronizedSortedMap( new TreeMap<String, ClientRecord>() );
+	private SortedMap< String, ClientRecord > dbase =
+		Collections.synchronizedSortedMap( 
+				new TreeMap< String, ClientRecord >() );
 	
 	///////////////////////////////////////////
 	//METHODS 
@@ -184,16 +186,9 @@ public class ClientDatabase {
 	
 	/////////////////////////////
 	// UPDATE (SET) METHODS
-	// no SET method for uid_Host since that is the key for this node in the treemap
 	/////////////////////////////
 	
-	
-	//TODO DELETE THIS SCAFF
-	public void printUpandListening(){
-		
-		System.out.println("Up and Listening");
-		
-	}
+
 	
 	public void halt_module(){
 		//TODO build and comment this method
