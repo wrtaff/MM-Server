@@ -56,7 +56,23 @@ public class ClientCommunicatorListener implements Runnable{
 	
 	public void run() {
 		
-		listenLoop();
+		//Need try/catch to make severed sessions graceful
+		try {
+			
+			listenLoop();
+			
+		} catch (NullPointerException e) {
+			
+			System.out.println("Connection Lost to " + 
+											parentCC.getKeyname());
+			
+			e.printStackTrace();
+			
+			parentCC.terminateSession();
+		    db.getRecord(parentCC.getKeyname()).
+		    								setClientStatus("LOST");
+			
+		}
 		
 				
 		
@@ -88,9 +104,13 @@ public class ClientCommunicatorListener implements Runnable{
 				
 			} catch (IOException e) {
 				
+				
 				e.printStackTrace();
 				
 			}
+			
+	
+			
 		
 			
 			if ( textReceived.compareTo("QUIT")==0 ){
