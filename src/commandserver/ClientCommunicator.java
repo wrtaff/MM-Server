@@ -1,5 +1,5 @@
 // Filename: ClientCommunicator.java
-// 06 November 2010
+// 21 December, 2010
 
 package commandserver;
 

@@ -1,7 +1,7 @@
-/**
- * 
- */
 package commandserver;
+//Filename: ClientCommunicator.java
+//21 December, 2010
+
 
 import java.io.*;
 

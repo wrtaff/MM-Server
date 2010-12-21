@@ -1,9 +1,6 @@
 package commandserver;
 // Filename: ClientRecord.java
-// 03 November 2010
-
-import java.net.*;
-import java.util.SortedMap;
+// 21 December, 2010
 
 /**
  * ClientRecord - the records in the database.
