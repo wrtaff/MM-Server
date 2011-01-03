@@ -233,7 +233,8 @@ public class ClientDatabase {
 			dbase.get(keyString).
 				setClientInbox("MOD_" + moduleNumber);
 			
-			//alert the client
+			//TODO delete this
+			// alert the client
 			//dbase.get(keyString).getCC().sendMessage2Client(
 			//		"CHECK_INBOX");
 			
