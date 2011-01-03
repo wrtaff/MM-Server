@@ -1,5 +1,5 @@
 // Filename: CandCserver.java
-// 03 November 2010
+// 21 December, 2010
 package commandserver;
 
 import java.io.IOException;
@@ -7,7 +7,10 @@ import java.net.*;
 
 /**
  * The server - top level for program, and listener for connections.
- * Sits and listens for connections, then passes them off to database.  
+ * Initializes the database.  Starts the UI.  
+ * Sits and listens for connections, spins off CC-Communicators
+ * to handle them and passes off Socket to same, then reset to 
+ * listen.   
  * 
  * @author W. Taff and P. Salevski
  *
@@ -19,25 +22,32 @@ public class CandCserver {
 	 */
 	public static void main(String[] args) {
 		
-		//TODO CLEAN initialization stuff - have to make the database:
-		ClientDatabase testDBase = new ClientDatabase();
+		
+		///////////////////////////////////////////
+		//INITIALIZATION
+		///////////////////////////////////////////
+		
+		ClientDatabase dataBase = new ClientDatabase();
+		
+		Integer listenPort = 30000;
+
+		Socket clntSock = null;		
 				
-		//TODO - start the UI - will strike this
+		
+		//start the UI
 		Thread GUIthread = new Thread(
-				new CandCserverMenuUI(testDBase));
+				new CandCserverMenuUI(dataBase));
 		GUIthread.start();
 		
-
-		//we'll need to have a socket listener here
-		Integer port = 30000;
-
-		Socket clntSock = null;
-		System.out.println ("Server Listening on port " + port);
 		
 		
 		try {
 			
-			ServerSocket server = new ServerSocket (port);
+			ServerSocket server = new ServerSocket (listenPort);
+		
+			System.out.println ("Server Listening on port "
+														+ listenPort);
+			
 			
 			while (true){
 			
@@ -45,25 +55,17 @@ public class CandCserver {
 				
 				clntSock = server.accept();
 				
-				System.out.println ("Accepted from " 
+				System.out.println ("Connection Accepted from " 
 						+ clntSock.getInetAddress() );
 				
 				Thread thread = new Thread(
-						new ClientCommunicator(clntSock, testDBase));
+						new ClientCommunicator(clntSock, dataBase));
 				
 				thread.start();
 				
-				System.out.println("Created and started Thread: " + 
-						thread.getName() );
-				
-				//shouldn't need to ever close the socket...
-				//server.close();
-				
-				//and we'll need to pass the cxn off here
-				System.out.println("sending socket off...");
-			
 			
 			}//end while
+			
 		}
 		catch (IOException ioe) {
 			System.err.println (ioe);

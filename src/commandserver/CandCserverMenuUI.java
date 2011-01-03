@@ -1,22 +1,28 @@
-/**
- * 
- */
+
 package commandserver;
+//Filename: CandCserverMenuUI.java
+//21 December, 2010
 
 import java.util.Scanner;
 
 /**
- * A temp class that makes a text based UI for CandCserver.
- * At least, until Paul is finished with the GUI version.
+ * Rudimentary command line, console based ui
+ * Used for troubleshooting and functionality verification; will
+ * likely be replaced with graphical version.  
  * 
- * @author will
+ * @author W. Taff and P. Salevski
  *
  */
 public class CandCserverMenuUI implements Runnable {
 	
 	//TODO - need comment this entire class.
 	
+	/** need access to db to invoke methods */
 	private ClientDatabase db; 
+	
+	
+	
+	
 	
 	public CandCserverMenuUI(ClientDatabase dbInput){
 		
@@ -24,57 +30,137 @@ public class CandCserverMenuUI implements Runnable {
 		
 	}
 
+	
+	
+	
 	/* (non-Javadoc)
 	 * @see java.lang.Runnable#run()
 	 */
-	//@Override
 	public void run() {
 		
+		uiConsole();
+		
+		
+	}//end run
+
+	
+	
+	
+	
+	private void uiConsole() {
+		
+		//OF FORM: commands, module numbers (if any), and targets
+		// e.g. MOD_0:ALL  or maybe PRINT:ALL
+		// if no target, assume ALL
 		
 		Scanner adminInputScanner = new Scanner(System.in);
 		
-		String inputString = adminInputScanner.next();
+		String inputString = "";
 		
-				
+		int cmdDelimValue;
+		
+		String command = null;
+		
+		String target = null;
+		
+		int moduleNumber = 999;		
+		
 		while (inputString.compareTo("QUIT")!=0){
 			
+			inputString = adminInputScanner.next();
 			
-			int delimValue = inputString.indexOf(":"); 
-						
+			inputString = inputString.toUpperCase();
 			
-			String command = inputString.substring(0,
-					delimValue);
+			cmdDelimValue = inputString.length();
+
+			
+			try {
+				if (inputString.contains(":")){
+				
+					cmdDelimValue = inputString.indexOf(":"); 
+									
+					command = inputString.substring(0,
+						cmdDelimValue);
+
+					target = inputString.substring(cmdDelimValue
+						+ 1);
+				
+				}
+				
+				else {
+					
+					command = inputString;
+					
+					target = "ALL";
+					
+				}
+				
+				
+				if (inputString.contains("_")){
+					
+					int modDelimValue = inputString.indexOf("_") + 1; 
+					
+							
+					moduleNumber = Integer.parseInt(inputString.
+							substring(modDelimValue, cmdDelimValue) );
+					
+					command = command.substring(0, modDelimValue -1 );
+					
+				
+				}
+				
+				
+			} catch (Exception e) {
+				
+				e.printStackTrace();
+				
+				System.out.println("ERROR ON PARSE OF INPUT");
+
+				
+			}
 			
 			
-			String target = inputString.substring(delimValue
-					+ 1);
+			System.out.println("Command is:" 
+					+ command );
 			
+			
+			System.out.println("Target is:" 
+					+ target );
+			
+			
+			System.out.println("Module Number is:" 
+											+ moduleNumber );
+			
+			
+			//THE COMMANDS
 			
 			
 			if (command.compareTo("PRINT") == 0){
 				
 				print(target);
+				
 			}
 			
 			
 			else if (command.compareTo("HALT") == 0){
 								
 				halt(target);
+				
 			}
 			
-			else if (command.contains("MOD")){
+			else if (command.compareTo("MOD") == 0){
 				
-				mod(command);
+				mod(moduleNumber, target);
 				
 			}
 			
 			else {
 				
-				//db.getRecord(command).getCC().sendMessage2Client(value);
+//				db.getRecord(command).getCC().
+//							sendMessage2Client(value);
 				
 			}//end else
 			
-			inputString = adminInputScanner.next();
 			
 			
 		}//end while
@@ -82,27 +168,22 @@ public class CandCserverMenuUI implements Runnable {
 		System.out.println("Got quit command");
 		
 		System.exit(0);
+		
 	}
 
-	
-	
-	
-	
-	private void mod(String command) {
+
+
+
+
+
+
+
+	private void mod(int moduleNumber, String target) {
 		// TODO need implement running mods by Exercise
-		
-		int delimModuleNum = command.indexOf("_"); 
-		
-		System.out.println(command.
-				substring(delimModuleNum+ 1));
 
-		int modNumber = Integer.parseInt(command.
-				substring(delimModuleNum+ 1));
-
-		System.out.println("Running MOD_" + 
-				modNumber);
+		System.out.println("Running MOD_" + moduleNumber);
 		
-		db.run_module(modNumber);
+		db.run_module(moduleNumber);
 		
 	}
 	
@@ -111,7 +192,6 @@ public class CandCserverMenuUI implements Runnable {
 	
 
 	private void halt(String target) {
-		// TODO Auto-generated method stub
 		
 		if (target.compareTo("ALL")==0){
 		
@@ -123,6 +203,11 @@ public class CandCserverMenuUI implements Runnable {
 
 	}
 
+	
+	
+	
+	
+	
 	/**
 	 * Print records in the database.  
 	 * @param target 
@@ -132,7 +217,11 @@ public class CandCserverMenuUI implements Runnable {
 		
 		if (target.compareTo("ALL")==0){
 		
+			
+			
 			String printBuffer = db.getAllrecordsFromDB();
+			
+			System.out.println("Host, Inbox, Status");
 			
 			System.out.println(printBuffer);
 		

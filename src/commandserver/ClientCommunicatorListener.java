@@ -1,7 +1,7 @@
-/**
- * 
- */
 package commandserver;
+//Filename: ClientCommunicator.java
+//21 December, 2010
+
 
 import java.io.*;
 
@@ -16,7 +16,6 @@ public class ClientCommunicatorListener implements Runnable{
 	///////////////////////////////////////////
 	//DATA MEMBERS 
 	///////////////////////////////////////////
-//TODO ENTIRE CLASS NEEDS DOCUMENTATION
 	
 	
 	/** passed - will bolt on top a BufferedReader */
@@ -39,7 +38,7 @@ public class ClientCommunicatorListener implements Runnable{
 	///////////////////////////////////////////
 	
 	
-
+	//CONSTRUCTOR
 	public ClientCommunicatorListener(InputStream inputStream,
 			ClientDatabase db, ClientCommunicator callingCC) {
 		
@@ -55,104 +54,140 @@ public class ClientCommunicatorListener implements Runnable{
 	}
 	
 	
-	//@Override
 	public void run() {
-		 
+		
+		//Need try/catch to make severed sessions graceful
+		try {
+			
+			listenLoop();
+			
+		} catch (NullPointerException e) {
+			
+			System.out.println("Connection Lost to " + 
+											parentCC.getKeyname());
+			
+			e.printStackTrace();
+			
+			parentCC.terminateSession();
+		    db.getRecord(parentCC.getKeyname()).
+		    								setClientStatus("LOST");
+			
+		}
+		
+				
+		
+	}//end run()	
+
+	
+	
+	
+	
+	
+
+	/**
+	 * Main loop of CCListener.
+	 * Blocks on readlines from MM-Client.  Calls appropriate db
+	 * methods based on input passed up from MM-Client.  
+	 * 
+	 */
+	private void listenLoop() {
+
 		Boolean keepGoing = true;
 		
 		String textReceived = "";
 		
-		System.out.println( Thread.currentThread().getName() +
-										"Listener up and listening");
-		db.printUpandListening();
-
-			//TODO - clean this code train wreck for readability - make fn's, including an assignment fn for '='? 
 		while ( keepGoing ) {
-
+		
 			try {
-
-				if (inBufferedReader.ready()) {
-					textReceived = inBufferedReader.readLine();
-					System.out.println(textReceived);
-				}
+					
+				textReceived = inBufferedReader.readLine();
+				
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+				
+				
 				e.printStackTrace();
+				
 			}
 			
+	
 			
-			
+		
 			
 			if ( textReceived.compareTo("QUIT")==0 ){
-				System.out.println("quitting....");
+				
 				parentCC.terminateSession();
+				
 				keepGoing = false;
+				
 			}
 			
 			else if ( textReceived.contains("GETINBOX")){
-			
 				
-				String inbox = db.getRecord(parentCC.getKeyname())
-					.getClientInbox();
-				
-				parentCC.sendMessage2Client(inbox);
-				
+				parentCC.sendMessage2Client(db.getRecord(
+						parentCC.getKeyname()).getClientInbox() );
 				
 			}
 			
 			
 			else if ( textReceived.contains("=") ){
 				
-				int delimValue = textReceived.indexOf("="); 
-				String key = textReceived.substring(0, delimValue);
-				String value = textReceived.substring(delimValue + 1);
-				System.out.println("Variable = " + key);
-				System.out.println("Value = " + value );
-
-				System.out.println("MM-node reports " + key + 
-						"=" + value);
+				setVariableValue(textReceived);
 				
-				if (key.compareTo("NAME")==0) {
-					
-					parentCC.setKeyname(value);
-					
-					db.createRecord(value, parentCC);
-									
-				}//end inner if
 				
-				else if (key.compareTo("STATUS")==0) {
-					
-					//with key, set the status
-					db.getRecord(parentCC.getKeyname()).setClientStatus(value);
-										
-				}// end status if
-				
-
-				
-				else if (key.compareTo("EXERCISE")==0){
-					
-					db.getRecord(parentCC.getKeyname()).setExercise(value);
-										
-				}//end exercise if
-
-				
-			}//end outer if
+			}//end if
 			
 			//RESET THE TEXT OR WE SPIN
 			textReceived = "";
 						
-			
-			 try {
-				 
-				 java.lang.Thread.sleep(10);
-			 }
-			 catch (InterruptedException e) {
-				 System.err.println(e);
-			 }
-			
-		} // end while loop
+
+		} // end while
+
+		
+	}
+
+
+	
+	
+	
+	
+	
+	/**
+	 * Set a db key/value pair based on input from MM-client
+	 *  
+	 * @param textReceived
+	 */
+	private void setVariableValue(String textReceived) {
+		
+		int delimValue = textReceived.indexOf("="); 
+		
+		String key = textReceived.substring(0, delimValue);
+		
+		String value = textReceived.substring(delimValue + 1);
 		
 		
-	}//end run()	
+		if (key.compareTo("NAME")==0) {
+			
+			parentCC.setKeyname(value);
+			
+			db.createRecord(value, parentCC);
+							
+		}
+		
+		else if (key.compareTo("STATUS")==0) {
+			
+			//with key, set the status
+			db.getRecord(parentCC.getKeyname()).
+			   								setClientStatus(value);
+								
+		}
+		
+
+		else if (key.compareTo("EXERCISE")==0){
+			
+			db.getRecord(parentCC.getKeyname()).setExercise(value);
+								
+		}
+		
+	}
 	
 }

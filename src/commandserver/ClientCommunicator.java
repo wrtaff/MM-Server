@@ -1,14 +1,10 @@
 // Filename: ClientCommunicator.java
-// 06 November 2010
+// 21 December, 2010
 
 package commandserver;
 
 import java.net.*;
-import java.util.SortedMap;
-
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.PrintStream;
 
 /**
@@ -48,11 +44,13 @@ public class ClientCommunicator implements Runnable{
 		try {
 			
 			this.outPrintStream = new PrintStream( 
+					
 					ccSocket.getOutputStream() );
 						
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
+			
 		}
 		
 		
@@ -60,7 +58,6 @@ public class ClientCommunicator implements Runnable{
 
 
 	
-	//TODO how deal with orphaned threads when lost cxn?  		
 
 	
 		
@@ -93,19 +90,19 @@ public class ClientCommunicator implements Runnable{
 				
 				//spin off new ccListener
 				
-				Thread thread = new Thread(
+				Thread listenerThread = new Thread(
 						new ClientCommunicatorListener(
 								ccSocket.getInputStream(), db, this));
-				thread.start();
 				
-				System.out.println("Created and started Thread: " + 
-						thread.getName() );
+				listenerThread.start();
+				
+				
 						
 				
 			} catch (IOException e) {
 			
-				// TODO Auto-generated catch block
 				e.printStackTrace();
+				
 			}
 			
 			
@@ -118,17 +115,24 @@ public class ClientCommunicator implements Runnable{
 		
 		
 		/**
-		 * Externally callable session terminator - closes socket.  
+		 * Externally callable session terminator - closes socket. 
+		 * Also updates the status of the MM-Client in the db.  
 		 */
 		public void terminateSession(){
 			
 			sendMessage2Client("Session Terminated");
 			
+			db.getRecord(keyname).setClientStatus("TERMINATED");
+			
 			try {
+				
 				ccSocket.close();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
+								
+			} catch (Exception e) {
+
 				e.printStackTrace();
+				db.getRecord(keyname).setClientStatus("LOST");
+				
 			}
 			
 			
@@ -137,7 +141,7 @@ public class ClientCommunicator implements Runnable{
 		
 
 		
-		/**
+		/**TODO COMMENT ME
 		 * @param msg
 		 */
 		public void sendMessage2Client(String msg){
