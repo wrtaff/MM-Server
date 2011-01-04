@@ -15,7 +15,7 @@ import java.util.Scanner;
  */
 public class CandCserverMenuUI implements Runnable {
 	
-	//TODO - need comment this entire class.
+	//TODO - need comment entire program.
 	
 	/** need access to db to invoke methods */
 	private ClientDatabase db; 
