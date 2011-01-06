@@ -63,10 +63,20 @@ public class ClientCommunicatorListener implements Runnable{
 			
 		} catch (NullPointerException e) {
 			
-			System.out.println("Connection Lost to " + 
-											parentCC.getKeyname());
+			e.printStackTrace();
+			
+		}
+		
+		catch (Exception e) {
 			
 			e.printStackTrace();
+			
+		}
+		
+		finally {
+			
+			System.out.println("Connection Lost to " + 
+					parentCC.getKeyname());
 			
 			parentCC.terminateSession();
 		    db.getRecord(parentCC.getKeyname()).
@@ -74,7 +84,6 @@ public class ClientCommunicatorListener implements Runnable{
 			
 		}
 		
-				
 		
 	}//end run()	
 
@@ -88,30 +97,18 @@ public class ClientCommunicatorListener implements Runnable{
 	 * Main loop of CCListener.
 	 * Blocks on readlines from MM-Client.  Calls appropriate db
 	 * methods based on input passed up from MM-Client.  
+	 * @throws Exception 
 	 * 
 	 */
-	private void listenLoop() {
+	private void listenLoop() throws Exception {
 
 		Boolean keepGoing = true;
 		
 		String textReceived = "";
 		
 		while ( keepGoing ) {
-		
-			try {
-					
-				textReceived = inBufferedReader.readLine();
-				
-			} catch (IOException e) {
-				
-				
-				e.printStackTrace();
-				
-			}
-			
 	
-			
-		
+			textReceived = inBufferedReader.readLine();
 			
 			if ( textReceived.compareTo("QUIT")==0 ){
 				
