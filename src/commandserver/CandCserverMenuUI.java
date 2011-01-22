@@ -15,7 +15,6 @@ import java.util.Scanner;
  */
 public class CandCserverMenuUI implements Runnable {
 	
-	//TODO - need comment entire program.
 	
 	/** need access to db to invoke methods */
 	private ClientDatabase db; 
@@ -179,7 +178,6 @@ public class CandCserverMenuUI implements Runnable {
 
 
 	private void mod(int moduleNumber, String target) {
-		// TODO need implement running mods by Exercise
 
 		System.out.println("Running MOD_" + moduleNumber);
 		
@@ -213,20 +211,16 @@ public class CandCserverMenuUI implements Runnable {
 	 * @param target 
 	 */
 	private void print(String target) {
-		// TODO make for specific target
 		
 		if (target.compareTo("ALL")==0){
-		
-			
-			
+
 			String printBuffer = db.getAllrecordsFromDB();
 			
-			System.out.println("Host, Inbox, Status");
+			System.out.println("Host, Exercise, Inbox, Status");
 			
 			System.out.println(printBuffer);
 		
 		}//endif
-		
 		
 		
 	}//END print()

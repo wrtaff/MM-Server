@@ -141,7 +141,8 @@ public class ClientCommunicator implements Runnable{
 		
 
 		
-		/**TODO COMMENT ME
+		/**
+		 * Pushes any input string down to MM-Client
 		 * @param msg
 		 */
 		public void sendMessage2Client(String msg){

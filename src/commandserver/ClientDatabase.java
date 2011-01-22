@@ -118,7 +118,7 @@ public class ClientDatabase {
 	 * Returns String of all database inbox and status for all MM-C.
 	 * Typically used for console troubleshooting. 
 	 * 
-	 * @return
+	 * @return returnString, a string of all db parameters by client
 	 */
 	public String getAllrecordsFromDB(){
 		
@@ -127,8 +127,9 @@ public class ClientDatabase {
 		for (String keyString : dbase.keySet() ) {
 			
 			returnString += keyString + "," + 
-					dbase.get(keyString).getClientInbox() + "," +
-					dbase.get(keyString).getClientStatus() +"\n" ;
+				dbase.get(keyString).getUID_ExerciseNetwork() +"," +
+				dbase.get(keyString).getClientInbox() + "," +
+				dbase.get(keyString).getClientStatus() +"\n" ;
 			
 		}//end for-loop
 		
@@ -228,13 +229,7 @@ public class ClientDatabase {
 			
 			dbase.get(keyString).
 				setClientInbox("MOD_" + moduleNumber);
-			
-			//TODO delete this
-			// alert the client
-			//dbase.get(keyString).getCC().sendMessage2Client(
-			//		"CHECK_INBOX");
-			
-
+		
 		}//end for-loop
 
 	}// end run_module()
